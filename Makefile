@@ -2,6 +2,7 @@
 #   make CROSS=riscv-none-elf-
 CROSS ?= riscv-none-elf-
 CC      = $(CROSS)gcc
+CXX     = $(CROSS)g++
 OBJCOPY = $(CROSS)objcopy
 OBJDUMP = $(CROSS)objdump
 ARCH    = $(CROSS)ar
@@ -81,6 +82,10 @@ $(BUILD_DIR)/RTOSDemo.axf: $(OBJS) fake_rom.lds Makefile
 $(BUILD_DIR)/%.o: %.c Makefile
 	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
+
+$(BUILD_DIR)/%.o: %.cpp Makefile
+	@mkdir -p $(@D)
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -MMD -MP -c $< -o $@
 
 $(BUILD_DIR)/%.o: %.S Makefile
 	@mkdir -p $(@D)
